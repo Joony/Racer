@@ -7,7 +7,6 @@ package ch.forea.racer {
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
-	
 	public class CarController {
 		
 		private var up:Boolean = false;
@@ -15,10 +14,19 @@ package ch.forea.racer {
 		private var left:Boolean = false;
 		private var right:Boolean = false;
 		
+		private var upKey:uint;
+		private var downKey:uint;
+		private var leftKey:uint;
+		private var rightKey:uint;
+		
 		private var car:Car;
 		
-		public function CarController(stage:Stage, car:Car) {
+		public function CarController(stage:Stage, car:Car, upKey:uint = Keyboard.UP, downKey:uint = Keyboard.DOWN, leftKey:uint = Keyboard.LEFT, rightKey:uint = Keyboard.RIGHT) {
 			this.car = car;
+			this.upKey = upKey;
+			this.downKey = downKey;
+			this.leftKey = leftKey;
+			this.rightKey = rightKey;
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressedDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyPressedUp);
 			stage.addEventListener(Event.ENTER_FRAME, moveCar);
@@ -31,16 +39,16 @@ package ch.forea.racer {
 		
 		private function keyPressedDown(event:KeyboardEvent):void {
 			switch (event.keyCode) {
-				case Keyboard.LEFT:
+				case leftKey:
 					this.left = true;
 					break;
-				case Keyboard.RIGHT:
+				case rightKey:
 					this.right = true;
 					break;
-				case Keyboard.UP:
+				case upKey:
 					this.up = true;
 					break;
-				case Keyboard.DOWN:
+				case downKey:
 					this.down = true;
 					break;
 			}
@@ -48,16 +56,16 @@ package ch.forea.racer {
 		
 		private function keyPressedUp(event:KeyboardEvent):void {
 			switch (event.keyCode) {
-				case Keyboard.LEFT:
+				case leftKey:
 					this.left = false;
 					break;
-				case Keyboard.RIGHT:
+				case rightKey:
 					this.right = false;
 					break;
-				case Keyboard.UP:
+				case upKey:
 					this.up = false;
 					break;
-				case Keyboard.DOWN:
+				case downKey:
 					this.down = false;
 					break;
 			}

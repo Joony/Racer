@@ -46,21 +46,25 @@ package ch.forea.racer {
 		public function move (direction:Number, acceleratorPressed:Boolean, brakePressed:Boolean):void {
 			// TODO Check to see if direction is a normalised number between -1 and 1
 			
-			if (acceleratorPressed && velocity < this.maximumSpeed) {
-				if (this.velocity * this.acceleration > this.maximumSpeed) // At the maximum forward speed.
+			if (acceleratorPressed && this.velocity < this.maximumSpeed) {
+				if (this.velocity * this.acceleration > this.maximumSpeed) // About to hit the maximum forward speed.
 					this.velocity = this.maximumSpeed;
-				else if (this.velocity < this.minimumSpeed) // 
-					this.velocity = this.minimumSpeed;
-				else
+				else if (this.velocity >= this.minimumSpeed) // At or going faster than the forward minimum speed.
 					this.velocity *= this.acceleration;
+				else if (this.velocity == 0) // Not moving.
+					this.velocity = this.minimumSpeed;
+				else  if (this.velocity <= -this.minimumSpeed) // At or going faster than the minumum backwards speed. 
+					this.velocity *= this.deceleration;
+				else if (this.velocity < 0 && this.velocity > -this.minimumSpeed) // Going forward but below the minimum speed.
+					this.velocity = 0;
 			}
 			
-			if (brakePressed && velocity > -this.maximumReverseSpeed) {
-				if (this.velocity >= this.minimumSpeed) // At the forward minimum speed.
-					this.velocity *= this.deceleration;
-				else if (this.velocity * this.acceleration < -this.maximumReverseSpeed) // At the maximum reverse speed.
+			if (brakePressed && this.velocity > -this.maximumReverseSpeed) {
+				if (this.velocity * this.acceleration < -this.maximumReverseSpeed) // About to hit the maximum reverse speed.
 					this.velocity = -this.maximumReverseSpeed;
-				else  if (this.velocity <= -this.minimumSpeed) // At the backwards minumum speed. 
+				else if (this.velocity >= this.minimumSpeed) // At or going faster than the forward minimum speed.
+					this.velocity *= this.deceleration;
+				else  if (this.velocity <= -this.minimumSpeed) // At or going faster than the minumum backwards speed. 
 					this.velocity *= this.acceleration;
 				else if (this.velocity > 0 && this.velocity < this.minimumSpeed) // Going forward but below the minimum speed.
 					this.velocity = 0;
