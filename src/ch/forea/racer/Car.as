@@ -107,4 +107,52 @@ package ch.forea.racer {
 		
 	}
 	
+	/*
+	collisionDistance# = c\radius+c2\radius
+	actualDistance# = Sqr((c2\x-c\x)^2+(c2\y-c\y)^2)
+	
+	;Collided or not?
+	If actualDistance<collisionDistance Then
+	
+	collNormalAngle#=ATan2(c2\y-c\y, c2\x-c\x)
+	
+	;Position exactly touching, no intersection
+	moveDist1#=(collisionDistance-actualDistance)*(c2\mass/Float((c\mass+c2\mass)))
+	moveDist2#=(collisionDistance-actualDistance)*(c\mass/Float((c\mass+c2\mass)))
+	c\x=c\x + moveDist1*Cos(collNormalAngle+180)
+	c\y=c\y + moveDist1*Sin(collNormalAngle+180)
+	c2\x=c2\x + moveDist2*Cos(collNormalAngle)
+	c2\y=c2\y + moveDist2*Sin(collNormalAngle)
+	
+	
+	;------------------------------------------
+	;COLLISION RESPONSE
+	;------------------------------------------
+	;n = vector connecting the centers of the circles.
+	;we are finding the components of the normalised vector n
+	nX#=Cos(collNormalAngle)
+	nY#=Sin(collNormalAngle)
+	
+	;now find the length of the components of each movement vectors
+	;along n, by using dot product.
+	a1# = c\dx*nX  +  c\dy*nY
+	a2# = c2\dx*nX +  c2\dy*nY
+	
+	;optimisedP = 2(a1 - a2)
+	;             ----------
+	;              m1 + m2
+	optimisedP# = (2.0 * (a1-a2)) / (c\mass + c2\mass)
+	
+	;now find out the resultant vectors
+	;r1 = c1\v - optimisedP * mass2 * n
+	c\dx = c\dx - (optimisedP*c2\mass*nX)
+	c\dy = c\dy - (optimisedP*c2\mass*nY)
+	
+	;r2 = c2\v - optimisedP * mass1 * n
+	c2\dx = c2\dx + (optimisedP*c\mass*nX)
+	c2\dy = c2\dy + (optimisedP*c\mass*nY)
+	
+	End If
+	*/
+	
 }
